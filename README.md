@@ -63,28 +63,28 @@ Ninja 仅支持 qinglong 2.8.2+
          - ENABLE_HANGUP=true
          - ENABLE_WEB_PANEL=true
        volumes:
-         - ./config:/ql/config
-         - ./log:/ql/log
-         - ./db:/ql/db
-         - ./repo:/ql/repo
-         - ./raw:/ql/raw
-         - ./scripts:/ql/scripts
-         - ./jbot:/ql/jbot
-         - ./ninja:/ql/ninja
+         - ./config:/ql/data/config
+         - ./log:/ql/data/log
+         - ./db:/ql/data/db
+         - ./repo:/ql/data/repo
+         - ./raw:/ql/data/raw
+         - ./scripts:/ql/data/scripts
+         - ./jbot:/ql/data/jbot
+         - ./ninja:/ql/data/ninja
    ```
 
    例（docker-run）：
 
    ```diff
    docker run -dit \
-     -v $PWD/ql/config:/ql/config \
-     -v $PWD/ql/log:/ql/log \
-     -v $PWD/ql/db:/ql/db \
-     -v $PWD/ql/repo:/ql/repo \
-     -v $PWD/ql/raw:/ql/raw \
-     -v $PWD/ql/scripts:/ql/scripts \
-     -v $PWD/ql/jbot:/ql/jbot \
-     -v $PWD/ql/ninja:/ql/ninja \
+     -v $PWD/ql/data/config:/ql/data/config \
+     -v $PWD/ql/data/log:/ql/data/log \
+     -v $PWD/ql/data/db:/ql/data/db \
+     -v $PWD/ql/data/repo:/ql/data/repo \
+     -v $PWD/ql/data/raw:/ql/data/raw \
+     -v $PWD/ql/data/scripts:/ql/data/scripts \
+     -v $PWD/ql/data/jbot:/ql/data/jbot \
+     -v $PWD/ql/data/ninja:/ql/data/ninja \
      -p 5700:5700 \
      -p 5701:5701 \
      --name qinglong \
@@ -98,23 +98,23 @@ Ninja 仅支持 qinglong 2.8.2+
    **进容器内执行以下命令**
 
    ```bash
-   git clone https://github.com/onlynair/ninja.git /ql/ninja
-   cd /ql/ninja/backend
+   git clone https://github.com/onlynair/ninja.git /ql/data/ninja
+   cd /ql/data/ninja/backend
    pnpm install
    cp .env.example .env # 如有需要, 修改.env
    pm2 start
-   cp sendNotify.js /ql/scripts/sendNotify.js
+   cp sendNotify.js /ql/data/scripts/sendNotify.js
    ```
 
 3. 将以下内容粘贴到 `extra.sh`（重启后自动更新并启动 Ninja）
 
    ```bash
-   cd /ql/ninja/backend
+   cd /ql/data/ninja/backend
    git checkout .
    git pull
    pnpm install
    pm2 start
-   cp sendNotify.js /ql/scripts/sendNotify.js
+   cp sendNotify.js /ql/data/scripts/sendNotify.js
    ```
 
 ### 容器外
@@ -128,7 +128,7 @@ git clone https://github.com/onlynair/ninja.git
 cd ninja/backend
 pnpm install
 # 复制 sendNotify.js 到容器内 scripts 目录，`qinglong` 为容器名
-sudo docker cp sendNotify.js qinglong:/ql/scripts/sendNotify.js
+sudo docker cp sendNotify.js qinglong:/ql/data/scripts/sendNotify.js
 cp .env.example .env
 # 修改env文件
 vi .env
@@ -163,7 +163,7 @@ QL_URL=http://localhost:5700
 配置方式：
 
 ```bash
-cd /ql/ninja/backend
+cd /ql/data/ninja/backend
 cp .env.example .env
 vi .env
 pm2 start
@@ -179,9 +179,9 @@ pm2 start
 
 ### Ninja 自定义
 
-（未完成）自定义推送二维码：将 `push.jpg` 文件添加到 `/ql/ninja/backend/static/` 目录下刷新网页即可。
+（未完成）自定义推送二维码：将 `push.jpg` 文件添加到 `/ql/data/ninja/backend/static/` 目录下刷新网页即可。
 
-自定义常见活动：修改 `/ql/backend/static/activity.json` 即可
+自定义常见活动：修改 `/ql/data/backend/static/activity.json` 即可
 
 ## 注意事项
 
@@ -194,7 +194,7 @@ pm2 start
 ## 如何更新Ninja
 
 ```bash
-cd /ql/ninja
+cd /ql/data/ninja
 git checkout .
 git pull
 cd backend
@@ -204,7 +204,7 @@ pm2 start
 ## 如何删除Ninja
 
 ```bash
-cd /ql/ninja
+cd /ql/data/ninja
 pm2 delete ninja
 rm -rf *
 rm -r ./.*
