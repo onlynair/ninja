@@ -52,7 +52,7 @@ Ninja 仅支持 qinglong 2.8.2+
    version: "3"
    services:
      qinglong:
-       image: whyour/qinglong:latest
+       image: avrura/qinglong:latest
        container_name: qinglong
        restart: unless-stopped
        tty: true
@@ -90,7 +90,7 @@ Ninja 仅支持 qinglong 2.8.2+
      --name qinglong \
      --hostname qinglong \
      --restart unless-stopped \
-     whyour/qinglong:latest
+     avrura/qinglong:latest
    ```
 
 2. 进容器内执行以下命令
